@@ -1,22 +1,20 @@
 package bean;
 
-public class V {//符号表中的符号model
+//符号表中的符号model
+public class V {
 	
 	private String single;
 	
 	public V(String single){
 		this.single=single;
-		
 	}
+
 	public String getSingle() {
 		return single;
 	}
+
 	public void setSingle(String single) {
 		this.single = single;
 	}
-	
-	
-	
-	
 
 }

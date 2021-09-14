@@ -1,6 +1,8 @@
 package bean;
 
+//四元表达式
 public class Node {
+	//种别码，字符串原貌，Value属性，Type属性
 	private String numType;
 	private String key;
 	private Object value;
@@ -42,10 +44,5 @@ public class Node {
 	public String toString() {
 		return "(" + numType + "," + key + "," + value + "," + beanTpye + ")";
 	}
-	
-	
-	
 
-	
-	
 }

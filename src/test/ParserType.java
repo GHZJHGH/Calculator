@@ -6,12 +6,10 @@ import bean.V;
 public class ParserType {
 	
 	 static final int BLANK=0;
-	 
 	 static final int ACC=20;
-	static /*以下变量用于语法分析*/ 
-	//终结符符号表 
-	
-	V $INTOrDouble=new V("i");
+	//以下变量用于语法分析
+	//终结符符号表
+	static V $INTOrDouble=new V("i");
 	static V $PLUS=new V("+");
 	static V $MINUS=new V("-");
 	static V $MUL=new V("*");
@@ -35,6 +33,7 @@ public class ParserType {
 			$RPAR,
 			$END
 	};
+
 	//非终结符符号表 
 	static V vn[]={
 			$E,
@@ -45,7 +44,6 @@ public class ParserType {
 
 	//规约时所需要的文法的产生式集合
 	static P pset[]={
-		
 			new P(0,$S,new String[]{$E.getSingle(),"0","0","0"}),//S->E
 			new P(1,$E,new String[]{$T.getSingle(),$PLUS.getSingle(),$E.getSingle(),"0"}),//E->E+T   
 			new P(2,$E,new String[]{$T.getSingle(),"0","0","0"}),   //E->T
@@ -81,7 +79,7 @@ public class ParserType {
 
 	 //Goto表
 	static int go[][] = {  
-	  //E,T,F  
+	  //E,T,F
 	  {1,2,3}, 
 	  {BLANK,BLANK,BLANK},  
 	  {BLANK,BLANK,BLANK},  

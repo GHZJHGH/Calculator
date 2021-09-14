@@ -1,7 +1,6 @@
 package test;
 
 import bean.Node;
-
 import java.util.ArrayList;
 
 public class WordAnalyze {
@@ -21,15 +20,19 @@ public class WordAnalyze {
                 //若为连续数字，则拼接起来
                 op += str.charAt(i);
                 i++;
-                if (i >= str.length())
+                if (i >= str.length()) {
                     break;
+                }
             }
             //若字符串不等于空，则一定为数字字符串
+            //继续判断数字和小数点是否组成合法的数字
             int l = op.length();
-            if (!op.equals("") && l > 0) {
+            if (!"".equals(op) && l > 0) {
                 int count = 0;
                 for (int j = 0; j < l; j++) {
-                    if (op.charAt(j) == '.') count++;
+                    if (op.charAt(j) == '.') {
+                        count++;
+                    }
                 }
                 if (count > 1 || op.charAt(0) == '.') {
                     flag = 1;
@@ -47,45 +50,45 @@ public class WordAnalyze {
                 }
             }
 
-            if (i >= str.length())
+            if (i >= str.length()) {
                 break;
+            }
             //不为数字（即操作符）
             char op2 = str.charAt(i);
             if (op2 == '+' || op2 == '-' || op2 == '*' || op2 == '/' || op2 == '(' || op2 == ')') {
-
                 switch (op2) {
                     case '+':
-                        Node detail1 = new Node("1", String.valueOf(op2), "NULL", "NULL");//判别为+号
+                        Node detail1 = new Node("1", String.valueOf(op2), "NULL", "NULL");
                         result.add(detail1);
                         System.out.println(detail1.toString());
                         break;
 
                     case '-':
-                        Node detail2 = new Node("2", String.valueOf(op2), "NULL", "NULL");//判别为-号
+                        Node detail2 = new Node("2", String.valueOf(op2), "NULL", "NULL");
                         result.add(detail2);
                         System.out.println(detail2.toString());
                         break;
 
                     case '*':
-                        Node detail3 = new Node("3", String.valueOf(op2), "NULL", "NULL");//判别为*号
+                        Node detail3 = new Node("3", String.valueOf(op2), "NULL", "NULL");
                         result.add(detail3);
                         System.out.println(detail3.toString());
                         break;
 
                     case '/':
-                        Node detail4 = new Node("4", String.valueOf(op2), "NULL", "NULL");//判别为/号
+                        Node detail4 = new Node("4", String.valueOf(op2), "NULL", "NULL");
                         result.add(detail4);
                         System.out.println(detail4.toString());
                         break;
 
                     case '(':
-                        Node detail5 = new Node("5", String.valueOf(op2), "NULL", "NULL");//判别为(号
+                        Node detail5 = new Node("5", String.valueOf(op2), "NULL", "NULL");
                         result.add(detail5);
                         System.out.println(detail5.toString());
                         break;
 
                     case ')':
-                        Node detail6 = new Node("6", String.valueOf(op2), "NULL", "NULL");//判别为)号
+                        Node detail6 = new Node("6", String.valueOf(op2), "NULL", "NULL");
                         result.add(detail6);
                         System.out.println(detail6.toString());
                         break;
@@ -97,9 +100,11 @@ public class WordAnalyze {
                 System.out.println("位置" + i + "为不合法的字符：" + "\"" + op2 + "\"");
             }
         }
+        //当输入串含有不合法的字符时，返回空
         if (flag == 1) {
             result = null;
         }
-        return result;  //返回表达式链表
+        //返回表达式链表
+        return result;
     }
 }

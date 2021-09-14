@@ -16,13 +16,11 @@ public class GrammarAnalyze {
 	private ArrayList<Node> singleQueue=new ArrayList<Node>();//符号栈
 	private ArrayList<Integer> analyzeQueue=new ArrayList<Integer>();//分析栈(状态栈)
 
-	
 	 GrammarAnalyze(ArrayList<Node> input){
 		this.inputQueue.add(particularNode);//输入串在进行语法分析前要先将结束符压入栈底
 		this.singleQueue.add(particularNode);//符号栈初始状态下为#
 		this.analyzeQueue.add(0);
 		this.input = input;
-
 	}
 
 	//语法、语义分析
@@ -40,10 +38,13 @@ public class GrammarAnalyze {
 		for (int j=0;j<input.size();j++){
 			Node n = input.get(j);
 			if (n.getNumType() == null){
+				//#
 				action = ParserType.action[status][7];
 			}else if (Integer.parseInt(n.getNumType())==7||Integer.parseInt(n.getNumType())==8){
+				//整数或小数
 				action = ParserType.action[status][0];
 			}else {
+				//+ - * / ( )
 				action = ParserType.action[status][Integer.parseInt(n.getNumType())];
 			}
 
@@ -53,8 +54,7 @@ public class GrammarAnalyze {
 			}else if(action == ParserType.ACC){
 				System.out.println("该输入串符合语法要求并已被接收");
 				System.out.println("计算结果："+symbolStack.get(1).getValue());
-
-			}else if (action>0){
+			}else if (action>0){//移进
 				statusStack.push(action);
 				symbolStack.push(n);
 				System.out.println(n+"加入符号栈");
@@ -63,16 +63,16 @@ public class GrammarAnalyze {
 				System.out.println("符号栈" + symbolStack+"\n");
 				status = action;
 				continue;
-			}else {
-				for(P p:ParserType.pset){//寻找产生式
-					if(p.getNum()== Math.abs(action)){
+			}else {//规约
+				//寻找产生式
+				for(P p:ParserType.pset){
+					if(p.getNum() == Math.abs(action)){
 						int noZeroNum=0;
 						//规约中间结果存储列表
-						ArrayList<Node>  reduceNodeList=new ArrayList<Node>();
-
+						ArrayList<Node>  reduceNodeList = new ArrayList<Node>();
 						//计算要被规约元素的个数
 						for(int i=0;i<p.getRigthExp().length;i++){
-							if(!p.getRigthExp()[i].equals("0")){
+							if(!"0".equals(p.getRigthExp()[i])){
 								noZeroNum++;
 							}
 						}
@@ -90,8 +90,9 @@ public class GrammarAnalyze {
 						for(V v:ParserType.vn){
 							if(!v.equals(ch)){
 								index++;
-							}else
+							}else {
 								break;
+							}
 						}
 
 						StringBuilder result=new StringBuilder();
@@ -100,6 +101,7 @@ public class GrammarAnalyze {
 						}
 						String rigthExp=result.toString();
 						System.out.println("rigthExp："+rigthExp);
+						//包含加减乘除的话，计算结果
 						if(rigthExp.contains("+")||rigthExp.contains("-")||rigthExp.contains("*")||rigthExp.contains("/")){
 							//规约后的单词四元式
 							Node saveNode=new Node(p.getRigthExp()[1],reduceNodeList.get(2).getValue().toString(),
