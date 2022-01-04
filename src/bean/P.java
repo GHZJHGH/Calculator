@@ -1,5 +1,8 @@
 package bean;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 //文法的产生式
 public class P {
 	private int num;
@@ -36,5 +39,19 @@ public class P {
 	public void setRigthExp(String[] rigthExp) {
 		this.rigthExp = rigthExp;
 	}
-	
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		P p = (P) o;
+		return num == p.num && leftV.getSingle().equals(p.leftV.getSingle()) && Arrays.equals(rigthExp, p.rigthExp);
+	}
+
+	@Override
+	public int hashCode() {
+		int result = Objects.hash(num, leftV);
+		result = 31 * result + Arrays.hashCode(rigthExp);
+		return result;
+	}
 }
